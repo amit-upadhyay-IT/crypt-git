@@ -1,0 +1,9 @@
+{
+  "generator-node": {
+    "promptValues": {
+      "authorName": "Amit Upadhyay",
+      "authorEmail": "amitupadhyayemail@gmail.com",
+      "authorUrl": "https://github.com/amit-upadhyay-IT"
+    }
+  }
+}

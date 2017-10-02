@@ -1,0 +1,48 @@
+{
+  "name": "crypt-git",
+  "version": "0.0.0",
+  "description": "File cryptography in github repository.",
+  "homepage": "https://github.com/amit-upadhyay-IT/crypt-git",
+  "author": {
+    "name": "Amit Upadhyay",
+    "email": "amitupadhyayemail@gmail.com",
+    "url": "https://github.com/amit-upadhyay-IT"
+  },
+  "files": [
+    "lib"
+  ],
+  "main": "lib/index.js",
+  "keywords": [
+    "git cryptography",
+    "cryptography",
+    "file encryption",
+    "file decryption",
+    "encryption",
+    "decryption"
+  ],
+  "devDependencies": {
+    "coveralls": "^2.13.1",
+    "nsp": "^2.6.3",
+    "eslint": "^4.1.0",
+    "eslint-config-xo-space": "^0.16.0",
+    "jest": "^21.0.0",
+    "jest-cli": "^21.0.0"
+  },
+  "scripts": {
+    "prepublish": "nsp check",
+    "pretest": "eslint . --fix",
+    "test": "jest"
+  },
+  "eslintConfig": {
+    "extends": "xo-space",
+    "env": {
+      "jest": true,
+      "node": true
+    }
+  },
+  "repository": "amit-upadhyay-it/crypt-git",
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "license": "Apache-2.0"
+}
