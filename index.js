@@ -11,6 +11,7 @@ module.exports = function (inputArray) {
     if (isPush !== null)
     {
         console.log('Pushing :',isPush.input);
+        doPushOperation(isPush.input);
     }
     else
     {
@@ -34,3 +35,14 @@ module.exports = function (inputArray) {
     });
 
 };
+
+function doPushOperation(theCmd)
+{
+    cmd.get(
+    theCmd,
+        function(err, data, stderr) {
+            console.log('data: ', data);
+        }
+    );
+    console.log('testing if async');
+}
