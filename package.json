@@ -1,6 +1,6 @@
 {
   "name": "crypt-git",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "File cryptography in github repository.",
   "homepage": "https://github.com/amit-upadhyay-IT/crypt-git",
   "author": {
@@ -9,7 +9,8 @@
     "url": "https://github.com/amit-upadhyay-IT"
   },
   "files": [
-    "lib"
+    "./cli.js",
+    "./index.js"
   ],
   "main": "lib/index.js",
   "keywords": [
@@ -44,5 +45,13 @@
   "jest": {
     "testEnvironment": "node"
   },
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "bin": {
+    "cg": "cli.js"
+  },
+  "dependencies": {
+    "find": "^0.2.7",
+    "meow": "^3.7.0",
+    "node-cmd": "^3.0.0"
+  }
 }
