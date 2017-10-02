@@ -10,9 +10,10 @@ var matchPushCmd = function (inputArray) {
     }
     inputCmd = inputCmd.slice(0, -1);//slicing the last space.
 
-    var toMatchCmd1 = 'git push -u origin master';
-    var toMatchCmd2 = 'git push origin master';
-    return (inputCmd === toMatchCmd1 || inputCmd === toMatchCmd2);
+    // working as a regex
+    var toMatchCmd1 = 'git push -u origin *';
+    var toMatchCmd2 = 'git push origin *';
+    return (inputCmd.match(toMatchCmd1) || inputCmd.match(toMatchCmd2));
 }
 
 
@@ -28,12 +29,18 @@ var matchCommitCmd = function (inputArray) {
     }
     inputCmd = inputCmd.slice(0, -1);//slicing the last space.
 
+    // working as a regex
     var toMatchCmd1 = 'git clone *';
     return inputCmd.match(toMatchCmd1);
 }
 
+module.exports.matchPushCmd = matchPushCmd;
+module.exports.matchCommitCmd = matchCommitCmd;
+
+/*
 var returnObj = matchCommitCmd(process.argv.slice(2));
 if (returnObj !== null)
     console.log(returnObj.input);
 else
     console.log('Invalid command');
+*/

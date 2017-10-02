@@ -2,14 +2,35 @@
 
 var cmd = require('node-cmd');
 
+var match_commands = require('./modules/match_command.js');
+
 module.exports = function (inputArray) {
-    console.log(inputArray);
+
+    // checking if push cmd
+    var isPush = match_commands.matchPushCmd(inputArray);
+    if (isPush !== null)
+    {
+        console.log('Pushing :',isPush.input);
+    }
+    else
+    {
+        // checking if commit cmd
+        var isCommit = match_commands.matchCommitCmd(inputArray);
+        if (isCommit !== null)
+        {
+            console.log('Commiting :', isCommit.input);
+        }
+        else
+        {
+            // on invalid command exit the process, so that user can restart program
+            console.log('Invalid Command, Try again');
+        }
+    }
 
     cmd.get(
         'pwd',
         function(err, data, stderr){
             console.log('the current working dir is : ',data)
-        }
-    );
+    });
 
 };
