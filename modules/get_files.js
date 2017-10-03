@@ -18,7 +18,10 @@ function getFiles()
     find.eachfile(fileNames[0], './../', function(file) {
         console.log(file);
         if (file.indexOf('node_modules') !== -1)// the directory where search is going is under node_modules
-            console.log('fuck');
+        {
+
+            //done();
+        }
     })
         .end(function() {
             console.log('Ended');

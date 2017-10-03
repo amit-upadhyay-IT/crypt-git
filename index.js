@@ -36,13 +36,14 @@ module.exports = function (inputArray) {
 
 };
 
+// the push operation can be async because we will push to the repo in then end, after we are done with encryption, and deletion of non-encrypted file.
 function doPushOperation(theCmd)
 {
+    // an async operation because it is required.
     cmd.get(
     theCmd,
         function(err, data, stderr) {
             console.log('data: ', data);
         }
     );
-    console.log('testing if async');
 }
