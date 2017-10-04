@@ -115,6 +115,8 @@ function decryptTheFile(iv, filePath, writablePath)
         fs.unline(filePath, function(err) {
             if (err)
                 console.log(err);
+            else
+                console.log('File decrypted successfully !!');
         });
     });
 }
