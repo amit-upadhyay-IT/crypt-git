@@ -4,6 +4,13 @@ var cmd = require('node-cmd');
 var fs = require('fs');
 var find = require('find');
 
+var crypto = require('crypto');
+var algorithm = 'aes-256-ctr';
+var password = ''; // should be entered by the user, it has be to 32 bytes in size
+
+var stream = require('stream');
+var zlib = require('zlib');
+
 var match_commands = require('./modules/match_command.js');
 
 module.exports = function (inputArray) {
@@ -32,6 +39,24 @@ module.exports = function (inputArray) {
     }
 
 };
+
+function generateIV()
+{
+    var iv = crypto.randomBytes(16);
+    var hexiv = iv.toString('hex');
+
+    var ivw = fs.createWriteStream('./.iv');
+    var Readable = stream.Readable;
+    var s = new Readable();
+    s._read = function noop() {};
+    s.push(hexiv);
+    s.push(null);
+    s.pipe(ivw);
+
+    s.on('end', function() {
+        // call the next required step
+    });
+}
 
 function getFiles()
 {
