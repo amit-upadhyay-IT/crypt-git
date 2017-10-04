@@ -15,8 +15,10 @@ var readline =require('readline');
 var rl = readline.createInterface(process.stdin, process.stdout);
 
 var theReqCmd = '';
+var commitMessage = '';
 
 var match_commands = require('./modules/match_command.js');
+
 
 module.exports = function (inputArray) {
 
@@ -65,6 +67,7 @@ function generateIV()
     });
 }
 
+
 function getPassword(iv)
 {
     rl.setPrompt('Enter the encryption password: ');
@@ -75,11 +78,13 @@ function getPassword(iv)
             password = get32Bytes(text);
             rl.close();// closing the readline and performing required calls
         }
-        rl.prompt();
+        else
+            rl.prompt();
     }).on('close', function() {
         getFiles(iv);
     });
 }
+
 
 function get32Bytes(text)
 {
@@ -87,6 +92,7 @@ function get32Bytes(text)
         text += text;
     return text.substr(0, 32);
 }
+
 
 function getFiles(iv)
 {
@@ -112,6 +118,7 @@ function getFiles(iv)
         }
     });
 }
+
 
 function doFileEncryption(filePath, iv, currPos, totalCount)
 {
@@ -147,19 +154,41 @@ function doFileEncryption(filePath, iv, currPos, totalCount)
     }
 }
 
+
 // the push operation can be async because we will push to the repo in the end, after we are done with encryption, and deletion of non-encrypted file.
 function doPushOperation()
 {
-    console.log('inside doPushOperation');
+    var msg = 'git add -A && git commit -m\'commit using app\' && git push -u origin master';
+
+    //var msg = 'git add -A && git commit -m \''+commitMessage+'\' && git push -u origin master';
+    console.log(msg);
     if (theReqCmd !== '')
     {
         // an async operation because it is required.
-        console.log('inside theReqCmd !== ');
+        console.log('inside theReqCmd');
         cmd.get(
-        theReqCmd,
+        msg,
             function(err, data, stderr) {
                 console.log('data: ', data);
             }
         );
     }
 }
+
+
+function getCommitMessage()
+{
+    rl.setPrompt('Enter commit message: ');
+    rl.prompt();
+    rl.on('line', function(text) {
+
+        commitMessage = text;
+        rl.close();
+
+    }).on('close', function() {
+
+        console.log('commit read closed');
+        doPushOperation();
+    });
+}
+
