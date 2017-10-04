@@ -13,7 +13,8 @@ var matchPushCmd = function (inputArray) {
     // working as a regex
     var toMatchCmd1 = 'git push -u origin *';
     var toMatchCmd2 = 'git push origin *';
-    return (inputCmd.match(toMatchCmd1) || inputCmd.match(toMatchCmd2));
+    var toMatchCmd3 = 'push';
+    return (inputCmd.match(toMatchCmd1) || inputCmd.match(toMatchCmd2) || inputCmd.match(toMatchCmd3));
 }
 
 
@@ -31,7 +32,8 @@ var matchCommitCmd = function (inputArray) {
 
     // working as a regex
     var toMatchCmd1 = 'git clone *';
-    return inputCmd.match(toMatchCmd1);
+    var toMatchCmd2 = 'clone';
+    return (inputCmd.match(toMatchCmd1) || inputCmd.match(toMatchCmd2));
 }
 
 module.exports.matchPushCmd = matchPushCmd;
