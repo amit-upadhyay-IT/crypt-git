@@ -20,8 +20,7 @@ module.exports = function (inputArray) {
     if (isPush !== null)
     {
         console.log('Pushing :',isPush.input);
-        getFiles();
-        //doPushOperation(isPush.input);
+        generateIV();// first step I am doing is generating IV, and it its callback I am calling other required function
     }
     else
     {
@@ -55,21 +54,51 @@ function generateIV()
 
     s.on('end', function() {
         // call the next required step
+        getFiles(iv);
     });
 }
 
-function getFiles()
+function getFiles(iv)
 {
     var fileContent = fs.readFileSync('./.cryptfiles', 'utf8');
     var fileNames = fileContent.split('\n');
 
     /*TODO: the files under node_modules should not get encrypted because they are however not pushed to the git repo*/
+    /*TODO: Now it's searching for the file name written in file line, later I should run a loop and do the same for rest of the lines*/
     find.file(fileNames[0], __dirname, function(file) {
-        if (file.indexOf('node_modules') !== -1)// the directory where search is going under node_modules
+
+        for (var i = 0; i < file.length; ++i)
         {
-            // do something
+            if (file[i].indexOf('node_modules') !== -1)// the directory where search is going under node_modules
+            {
+                // do something
+            }
+            else
+            {
+                // call the file encryption function here, because I don't want to encrypt the files under node_modules
+            }
+            console.log(file[i]);
         }
-        console.log(file);
+    });
+}
+
+function doFileEncryption(filePath, iv)
+{
+    var r = fs.createReadStream(filePath);
+
+    var zip = zlib.creatGzip();
+
+    var encrypt = crypto.createCipheriv(algorith, password, iv);
+
+    var w =  fs.createWriteStream(filePath+'.crypt');
+
+    r.pipe(zip).pipe(encrypt).pipe(w);
+
+    r.on('end', function() {
+        fs.unlink(filePath, function(err) {
+            if (err)
+                console.log(err);
+        });
     });
 }
 
