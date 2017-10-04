@@ -112,7 +112,7 @@ function decryptTheFile(iv, filePath, writablePath)
     r.pipe(decrypt).pipe(unzip).pipe(w);
 
     r.on('end', function() {
-        fs.unline(filePath, function(err) {
+        fs.unlink(filePath, function(err) {
             if (err)
                 console.log(err);
             else
