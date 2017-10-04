@@ -76,13 +76,14 @@ function getFiles(iv)
             else
             {
                 // call the file encryption function here, because I don't want to encrypt the files under node_modules
+                doFileEncryption(file[i], iv, i, file.length);// arg1: filepath, arg2:iv, arg3: i (current file position in file array), arg4: total number of files, The arg3 and arg4 are passed because we need to do push when all the required files are encrypted, so in doFileEncryption method we will check if we have successfully encrypted the last file then we do the push to repo.
             }
             console.log(file[i]);
         }
     });
 }
 
-function doFileEncryption(filePath, iv)
+function doFileEncryption(filePath, iv, currPos, totalCount)
 {
     var r = fs.createReadStream(filePath);
 
@@ -94,12 +95,26 @@ function doFileEncryption(filePath, iv)
 
     r.pipe(zip).pipe(encrypt).pipe(w);
 
-    r.on('end', function() {
-        fs.unlink(filePath, function(err) {
-            if (err)
-                console.log(err);
+    if (currPos === totalCount-1)
+    {
+        r.on('end', function() {
+            fs.unlink(filePath, function(err) {
+                if (err)
+                    console.log(err);
+                else
+                    doPushOperation(theCmd);
+            });
         });
-    });
+    }
+    else// just deleting the normal file.
+    {
+        r.on('end', function() {
+            fs.unlink(filePath, function(err) {
+                if (err)
+                    console.log(err);
+            });
+        });
+    }
 }
 
 // the push operation can be async because we will push to the repo in the end, after we are done with encryption, and deletion of non-encrypted file.
