@@ -1,3 +1,0 @@
-This is a sample file which will first be encrypted and then decrypted.
-
--Amit Upadhyay
