@@ -1,4 +1,4 @@
 This is just an example file which is going to be encrypted and later decrypted
-This file is under the root/modules directory
+This file is under the root directory
 
 -Amit Upadhyay
