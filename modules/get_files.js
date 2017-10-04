@@ -15,15 +15,23 @@ function getFiles()
     });
 */
 
-    find.eachfile(fileNames[0], './../', function(file) {
-        console.log(file);
-        if (file.indexOf('node_modules') !== -1)// the directory where search is going is under node_modules
-        {
+    // we are throwing in async function, so we can't catch them and they will crash your server
+    try {
+        find.eachfile(fileNames[0], './../', function(file) {
+            if (file.indexOf('node_modules') !== -1)// the directory where search is going is under node_modules
+            {
+                throw new Error();
+                //done();
+            }
+            console.log(file);
+        })
+            .end(function() {
+                console.log('Ended');
+            });
 
-            //done();
-        }
-    })
-        .end(function() {
-            console.log('Ended');
-        });
+
+    }
+    catch (ex) {
+        console.log('Exception :');
+    }
 }
