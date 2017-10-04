@@ -77,6 +77,43 @@ function readIV()
 }
 
 
+function findEncryptedFiles(iv)
+{
+    find.file(/\.crypt$/, __dirname, function(files) {
+
+        for (var i = 0; i < files.length; ++i)
+        {
+            var path = files[i];// this file name has .crypt addpended
+            var writablePath = path.replace('.crypt', '');
+            decryptTheFile(iv, files[i], writablePath);
+        }
+    });
+}
+
+
+function decryptTheFile(iv, filePath, writablePath)
+{
+    // input file
+    var r = fs.createReadStream(filePath);
+    // decrypt content
+    var decrypt = crypto.createDecipheriv(algorithm, password, iv);
+    // unzip content
+    var unzip = zlib.createGunzip();
+    // write file
+    var w = fs.createWriteStream(writablePath);
+
+    // start pipe
+    r.pipe(decrypt).pipe(unzip).pipe(w);
+
+    r.on('end', function() {
+        fs.unline(filePath, function(err) {
+            if (err)
+                console.log(err);
+        });
+    });
+}
+
+
 function generateIV()
 {
     var iv = crypto.randomBytes(16);
