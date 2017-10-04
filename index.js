@@ -40,6 +40,7 @@ module.exports = function (inputArray) {
         {
             // on invalid command exit the process, so that user can restart program
             console.log('Invalid Command, Try again');
+            process.exit(0);
         }
     }
 };
@@ -116,9 +117,9 @@ function doFileEncryption(filePath, iv, currPos, totalCount)
 {
     var r = fs.createReadStream(filePath);
 
-    var zip = zlib.creatGzip();
+    var zip = zlib.createGzip();
 
-    var encrypt = crypto.createCipheriv(algorith, password, iv);
+    var encrypt = crypto.createCipheriv(algorithm, password, iv);
 
     var w =  fs.createWriteStream(filePath+'.crypt');
 
@@ -149,11 +150,13 @@ function doFileEncryption(filePath, iv, currPos, totalCount)
 // the push operation can be async because we will push to the repo in the end, after we are done with encryption, and deletion of non-encrypted file.
 function doPushOperation()
 {
+    console.log('inside doPushOperation');
     if (theReqCmd !== '')
     {
         // an async operation because it is required.
+        console.log('inside theReqCmd !== ');
         cmd.get(
-        theCmd,
+        theReqCmd,
             function(err, data, stderr) {
                 console.log('data: ', data);
             }
