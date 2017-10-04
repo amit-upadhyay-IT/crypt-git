@@ -14,6 +14,8 @@ var readline =require('readline');
 
 var rl = readline.createInterface(process.stdin, process.stdout);
 
+var theReqCmd = '';
+
 var match_commands = require('./modules/match_command.js');
 
 module.exports = function (inputArray) {
@@ -22,6 +24,7 @@ module.exports = function (inputArray) {
     var isPush = match_commands.matchPushCmd(inputArray);
     if (isPush !== null)
     {
+        theReqCmd = isPush.input;
         console.log('Pushing :',isPush.input);
         generateIV();// first step I am doing is generating IV, and it its callback I am calling other required function
     }
@@ -39,8 +42,8 @@ module.exports = function (inputArray) {
             console.log('Invalid Command, Try again');
         }
     }
-
 };
+
 
 function generateIV()
 {
@@ -57,8 +60,31 @@ function generateIV()
 
     s.on('end', function() {
         // call the next required step
+        getPassword(iv);
+    });
+}
+
+function getPassword(iv)
+{
+    rl.setPrompt('Enter the encryption password: ');
+    rl.prompt();
+    rl.on('line', function(text) {
+        if (text.length > 5 && text.split(' ').length == 1)// split is checking if password has some space inbetween
+        {
+            password = get32Bytes(text);
+            rl.close();// closing the readline and performing required calls
+        }
+        rl.prompt();
+    }).on('close', function() {
         getFiles(iv);
     });
+}
+
+function get32Bytes(text)
+{
+    while (text.length <= 32)
+        text += text;
+    return text.substr(0, 32);
 }
 
 function getFiles(iv)
@@ -86,20 +112,6 @@ function getFiles(iv)
     });
 }
 
-function getPassword()
-{
-    rl.setPrompt('Enter the encryption password: ');
-    rl.prompt();
-    rl.on('line', function(text) {
-        if (text.length > 5 && text.split(' ').length == 1)// split is checking if password has some space inbetween
-        {
-            rl.close();// close the readline and perform required op
-        }
-        rl.prompt();
-    });
-
-}
-
 function doFileEncryption(filePath, iv, currPos, totalCount)
 {
     var r = fs.createReadStream(filePath);
@@ -119,7 +131,7 @@ function doFileEncryption(filePath, iv, currPos, totalCount)
                 if (err)
                     console.log(err);
                 else
-                    doPushOperation(theCmd);
+                    doPushOperation();
             });
         });
     }
@@ -135,13 +147,16 @@ function doFileEncryption(filePath, iv, currPos, totalCount)
 }
 
 // the push operation can be async because we will push to the repo in the end, after we are done with encryption, and deletion of non-encrypted file.
-function doPushOperation(theCmd)
+function doPushOperation()
 {
-    // an async operation because it is required.
-    cmd.get(
-    theCmd,
-        function(err, data, stderr) {
-            console.log('data: ', data);
-        }
-    );
+    if (theReqCmd !== '')
+    {
+        // an async operation because it is required.
+        cmd.get(
+        theCmd,
+            function(err, data, stderr) {
+                console.log('data: ', data);
+            }
+        );
+    }
 }
