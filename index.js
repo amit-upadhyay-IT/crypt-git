@@ -48,6 +48,35 @@ module.exports = function (inputArray) {
 };
 
 
+function doPull()
+{
+        cmd.get(
+        'git pull',
+            function(err, data, stderr) {
+                if (err)
+                {
+                    console.log(err);
+                    process.exit(0);
+                }
+                else
+                {
+                    console.log('data: ', data);
+                    readIV();
+                }
+            }
+        );
+
+}
+
+
+// I need to get pull from repo before I start the process of decrption
+function readIV()
+{
+    var ivContent = fs.readFileSync('./.iv', 'utf8');
+    var iv = new Buffer(ivContent, 'hex');
+}
+
+
 function generateIV()
 {
     var iv = crypto.randomBytes(16);
@@ -169,7 +198,10 @@ function doPushOperation()
         cmd.get(
         msg,
             function(err, data, stderr) {
-                console.log('data: ', data);
+                if (err)
+                    console.log(err);
+                else
+                    console.log('data: ', data);
             }
         );
     }
