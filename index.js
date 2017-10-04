@@ -17,6 +17,8 @@ var rl = readline.createInterface(process.stdin, process.stdout);
 var theReqCmd = '';
 var commitMessage = '';
 
+var flag = 0;
+
 var match_commands = require('./modules/match_command.js');
 
 
@@ -26,6 +28,7 @@ module.exports = function (inputArray) {
     var isPush = match_commands.matchPushCmd(inputArray);
     if (isPush !== null)
     {
+        flag = 1;
         theReqCmd = isPush.input;
         console.log('Pushing :',isPush.input);
         generateIV();// first step I am doing is generating IV, and it its callback I am calling other required function
@@ -36,7 +39,9 @@ module.exports = function (inputArray) {
         var isCommit = match_commands.matchCommitCmd(inputArray);
         if (isCommit !== null)
         {
+            flag = 2;
             console.log('Commiting :', isCommit.input);
+            doPull();
         }
         else
         {
@@ -74,6 +79,7 @@ function readIV()
 {
     var ivContent = fs.readFileSync('./.iv', 'utf8');
     var iv = new Buffer(ivContent, 'hex');
+    getPassword(iv);
 }
 
 
@@ -136,7 +142,13 @@ function generateIV()
 
 function getPassword(iv)
 {
-    rl.setPrompt('Enter the encryption password: ');
+    var msgPrpmpt = '';
+    if (flag == 1)
+        msgPrpmpt = 'Enter the encryption password: ';
+    else if (flag == 2)
+        msgPrpmpt = 'Enter the decryption password: ';
+
+    rl.setPrompt(msgPrpmpt);
     rl.prompt();
     rl.on('line', function(text) {
         if (text.length > 5 && text.split(' ').length == 1)// split is checking if password has some space inbetween
@@ -147,7 +159,10 @@ function getPassword(iv)
         else
             rl.prompt();
     }).on('close', function() {
-        getFiles(iv);
+        if (flag === 1)
+            getFiles(iv);
+        else if (flag == 2)
+            findEncryptedFiles(iv);
     });
 }
 
