@@ -10,6 +10,9 @@ var password = ''; // should be entered by the user, it has be to 32 bytes in si
 
 var stream = require('stream');
 var zlib = require('zlib');
+var readline =require('readline');
+
+var rl = readline.createInterface(process.stdin, process.stdout);
 
 var match_commands = require('./modules/match_command.js');
 
@@ -83,6 +86,20 @@ function getFiles(iv)
     });
 }
 
+function getPassword()
+{
+    rl.setPrompt('Enter the encryption password: ');
+    rl.prompt();
+    rl.on('line', function(text) {
+        if (text.length > 5 && text.split(' ').length == 1)// split is checking if password has some space inbetween
+        {
+            rl.close();// close the readline and perform required op
+        }
+        rl.prompt();
+    });
+
+}
+
 function doFileEncryption(filePath, iv, currPos, totalCount)
 {
     var r = fs.createReadStream(filePath);
@@ -95,7 +112,7 @@ function doFileEncryption(filePath, iv, currPos, totalCount)
 
     r.pipe(zip).pipe(encrypt).pipe(w);
 
-    if (currPos === totalCount-1)
+    if (currPos === totalCount-1)// deleting as well as doing push
     {
         r.on('end', function() {
             fs.unlink(filePath, function(err) {
