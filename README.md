@@ -1,5 +1,7 @@
 # crypt-git [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coveralls-image]][coveralls-url]
 > Got some important files which you don't want to share publicly but still want to use github as VCS for your softwares. Crypt-git can help you.
+
+
 crypt-git is a command line utility written in node.js which enables to encrypt important files when you push them on GitHub repo and decrypt then when you want to work remotely. Doing this is very very simple with 'crypt-git'.
 
 ## Installation
@@ -21,31 +23,28 @@ You just need to maintain a file `.cryptfiles` where you need to specify the `fi
 `vim .cryptfiles`
 
 
-### To push:
+#### To push:
 ```
 $ cg push <commit message>
-
-// cg is abbreviation for crypt-git
 ```
 
-- <commit message> is optional.
+- `<commit message>` is optional.
 
 The above command is equivalent to doing these operations:
 
-- a) `git add -A`
-- b) `git commit -m'your message'`
-- c) `git push -u origin master`
+- `git add -A`
+- `git commit -m'your message'`
+- `git push -u origin master`
 
 Now all your important files mentioned in `.cryptfiles` file are pushed on your repository in encrypted (and compressed) form.
 
-### To pull:
+#### To pull:
 
 When you want to work remotely with your repository then all you need is:
 ```
 cg pull
-
-// cg is abbreviation for crypt-git
 ```
+NOTE: cg is abbreviation for crypt-git
 
 The above command is equivalent to:
 ```
@@ -61,6 +60,8 @@ $ cg push <commit message> // to push
 
 cg pull // to pull
 ```
+To know more see [this](https://github.com/amit-upadhyay-IT/crypt-git#documentation).
+
 ## License
 
 Apache-2.0 © [Amit Upadhyay](https://github.com/amit-upadhyay-IT)
