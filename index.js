@@ -32,10 +32,6 @@ module.exports = function (inputArray) {
         commitMessage = isPush.input.substr(5, isPush.input.length);
         console.log(commitMessage);
         theReqCmd = isPush.input;
-        if (inputArray.length > 1)
-        {
-            commitMessage = inputArray[1];
-        }
         generateIV();// first step I am doing is generating IV, and it its callback I am calling other required function
     }
     else
@@ -266,7 +262,8 @@ function doFileEncryption(filePath, iv, currPos, totalCount)
 // the push operation can be async because we will push to the repo in the end, after we are done with encryption, and deletion of non-encrypted file.
 function doPushOperation()
 {
-    console.log('commit message : :', commitMessage);
+    if (commitMessage === '')
+        commitMessage = 'Commit via crypt-git';
     var msg = 'git add -A && git commit -m "'+commitMessage+'" && git push -u origin master';
     //var msg = 'git add -A && git commit -m \''+commitMessage+'\' && git push -u origin master';
     console.log(msg);
