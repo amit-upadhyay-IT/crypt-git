@@ -11,10 +11,11 @@ var matchPushCmd = function (inputArray) {
     inputCmd = inputCmd.slice(0, -1);//slicing the last space.
 
     // working as a regex
-    var toMatchCmd1 = 'git push -u origin *';
-    var toMatchCmd2 = 'git push origin *';
-    var toMatchCmd3 = 'push';
-    return (inputCmd.match(toMatchCmd1) || inputCmd.match(toMatchCmd2) || inputCmd.match(toMatchCmd3));
+    //var toMatchCmd1 = 'git push -u origin *';
+    //var toMatchCmd2 = 'git push origin *';
+    var toMatchCmd3 = 'push *';
+    //return (inputCmd.match(toMatchCmd1) || inputCmd.match(toMatchCmd2) || inputCmd.match(toMatchCmd3));
+    return (inputCmd.match(toMatchCmd3));
 }
 
 

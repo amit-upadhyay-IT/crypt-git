@@ -30,6 +30,10 @@ module.exports = function (inputArray) {
     {
         flag = 1;
         theReqCmd = isPush.input;
+        if (inputArray.length > 1)
+        {
+            commitMessage = inputArray[1];
+        }
         generateIV();// first step I am doing is generating IV, and it its callback I am calling other required function
     }
     else
@@ -170,6 +174,11 @@ function getPassword(iv)
         else
             rl.prompt();
     }).on('close', function() {
+        if (password.length < 1)
+        {
+            console.log('\nNo password entered\n');
+            process.exit(0);
+        }
         if (flag === 1)
             getFiles(iv);
         else if (flag == 2)
@@ -197,7 +206,7 @@ function getFiles(iv)
 
         if (file.length == 0)
         {
-            console.log('There are no files to be encrypted');
+            console.log('\nThere are no files to be encrypted\n');
             process.exit(0);
         }
 
@@ -255,10 +264,10 @@ function doFileEncryption(filePath, iv, currPos, totalCount)
 // the push operation can be async because we will push to the repo in the end, after we are done with encryption, and deletion of non-encrypted file.
 function doPushOperation()
 {
-    var msg = 'git add -A && git commit -m\'commit using app\' && git push -u origin master';
+    var msg = 'git add -A && git commit -m "'+commitMessage+'" && git push -u origin master';
     //var msg = 'git add -A && git commit -m \''+commitMessage+'\' && git push -u origin master';
     console.log(msg);
-    if (theReqCmd !== '')
+    if (theReqCmd !== '')// just a normal check if user wants to push or not
     {
         // an async operation because it is required.
         console.log('inside theReqCmd');
