@@ -29,6 +29,8 @@ module.exports = function (inputArray) {
     if (isPush !== null)
     {
         flag = 1;
+        commitMessage = isPush.input.substr(5, isPush.input.length);
+        console.log(commitMessage);
         theReqCmd = isPush.input;
         if (inputArray.length > 1)
         {
