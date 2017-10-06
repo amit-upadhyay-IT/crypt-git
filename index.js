@@ -266,11 +266,9 @@ function doPushOperation()
         commitMessage = 'Commit via crypt-git';
     var msg = 'git add -A && git commit -m "'+commitMessage+'" && git push -u origin master';
     //var msg = 'git add -A && git commit -m \''+commitMessage+'\' && git push -u origin master';
-    console.log(msg);
     if (theReqCmd !== '')// just a normal check if user wants to push or not
     {
         // an async operation because it is required.
-        console.log('inside theReqCmd');
         cmd.get(
         msg,
             function(err, data, stderr) {
