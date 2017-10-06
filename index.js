@@ -21,8 +21,12 @@ var flag = 0;
 
 var match_commands = require('./modules/match_command.js');
 
+var prevIV = '';
+
 
 module.exports = function (inputArray) {
+
+    getPrevIV();
 
     // checking if push cmd
     var isPush = match_commands.matchPushCmd(inputArray);
@@ -30,7 +34,6 @@ module.exports = function (inputArray) {
     {
         flag = 1;
         commitMessage = isPush.input.substr(5, isPush.input.length);
-        console.log(commitMessage);
         theReqCmd = isPush.input;
         generateIV();// first step I am doing is generating IV, and it its callback I am calling other required function
     }
@@ -41,7 +44,6 @@ module.exports = function (inputArray) {
         if (isCommit !== null)
         {
             flag = 2;
-            console.log('Commiting :', isCommit.input);
             doPull();
         }
         else
@@ -53,6 +55,24 @@ module.exports = function (inputArray) {
     }
 };
 
+
+function getPrevIV()
+{
+    try {
+        var contentIV = fs.readFileSync('./.iv', 'utf8');
+        prevIV = contentIV;
+    }
+    catch(ex)
+    {
+        // if the file doesn't exist then no issue so I wouldn't show any exception
+    }
+}
+
+
+function onFailPushWritePrevIV()
+{
+    fs.writeFileSync('./.iv', prevIV);
+}
 
 function doPull()
 {
@@ -94,7 +114,7 @@ function readIV()
 
 function findEncryptedFiles(iv)
 {
-    find.file(/\.crypt$/, __dirname, function(files) {
+    find.file(/\.crypt$/, './', function(files) {// using __dirname is a problem here
 
         for (var i = 0; i < files.length; ++i)
         {
@@ -195,13 +215,22 @@ function get32Bytes(text)
 
 function getFiles(iv)
 {
-    var fileContent = fs.readFileSync('./.cryptfiles', 'utf8');
+    var fileContent = '';
+    try {
+        fileContent = fs.readFileSync('./.cryptfiles', 'utf8');
+    }
+    catch(ex) {
+        console.log('You need to maintain \'.cryptfiles\', kindly read the documentation:\n"cg --docs"');
+        process.exit(0);
+    }
     var fileNames = fileContent.split('\n');
+    console.log(fileNames[0]);
 
     /*TODO: the files under node_modules should not get encrypted because they are however not pushed to the git repo*/
     /*TODO: Now it's searching for the file name written in file line, later I should run a loop and do the same for rest of the lines*/
-    find.file(fileNames[0], __dirname, function(file) {
+    find.file(fileNames[0], './', function(file) {
 
+        console.log(__dirname);
         if (file.length == 0)
         {
             console.log('\nThere are no files to be encrypted\n');
@@ -273,7 +302,11 @@ function doPushOperation()
         msg,
             function(err, data, stderr) {
                 if (err)
+                {
+                    // if the push fails then I need to restore the previous iv otherwise it will give error in decrypting and decompressing
                     console.log(err);
+                    onFailPushWritePrevIV();
+                }
                 else
                     console.log(data);
             }
