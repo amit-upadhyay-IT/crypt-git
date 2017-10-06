@@ -21,6 +21,7 @@ You just need to maintain a file `.cryptfiles` where you need to specify the `fi
 
 ##### edit .cryptfiles file
 `vim .cryptfiles`
+See [this](https://github.com/amit-upadhyay-IT/crypt-git/blob/master/.cryptfiles)
 
 
 #### To push:
@@ -61,6 +62,7 @@ $ cg push <commit message> // to push
 cg pull // to pull
 ```
 To know more see [this](https://github.com/amit-upadhyay-IT/crypt-git#documentation).
+
 
 ## License
 
