@@ -266,6 +266,7 @@ function doFileEncryption(filePath, iv, currPos, totalCount)
 // the push operation can be async because we will push to the repo in the end, after we are done with encryption, and deletion of non-encrypted file.
 function doPushOperation()
 {
+    console.log('commit message : :', commitMessage);
     var msg = 'git add -A && git commit -m "'+commitMessage+'" && git push -u origin master';
     //var msg = 'git add -A && git commit -m \''+commitMessage+'\' && git push -u origin master';
     console.log(msg);
