@@ -30,7 +30,6 @@ module.exports = function (inputArray) {
     {
         flag = 1;
         theReqCmd = isPush.input;
-        console.log('Pushing :',isPush.input);
         generateIV();// first step I am doing is generating IV, and it its callback I am calling other required function
     }
     else
