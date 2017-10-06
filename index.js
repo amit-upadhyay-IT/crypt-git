@@ -77,9 +77,17 @@ function doPull()
 // I need to get pull from repo before I start the process of decryption
 function readIV()
 {
-    var ivContent = fs.readFileSync('./.iv', 'utf8');
-    var iv = new Buffer(ivContent, 'hex');
-    getPassword(iv);
+    try
+    {
+        var ivContent = fs.readFileSync('./.iv', 'utf8');
+        var iv = new Buffer(ivContent, 'hex');
+        getPassword(iv);
+    }
+    catch(ex)
+    {
+        console.log('You are trying to decrypt some different project\nCheck:\n1)Clone same project which you have encrypted via crypt-git and pushed to git\n2)This repo has never been encrypted\n');
+        process.exit(0);
+    }
 }
 
 
@@ -116,7 +124,9 @@ function decryptTheFile(iv, filePath, writablePath)
             if (err)
                 console.log(err);
             else
-                console.log('File decrypted successfully !!');
+            {
+                //console.log('File decrypted successfully !!');
+            }
         });
     });
 }
