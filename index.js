@@ -59,8 +59,13 @@ module.exports = function (inputArray) {
 function getPrevIV()
 {
     try {
-        var contentIV = fs.readFileSync('./.iv', 'utf8');
-        prevIV = contentIV;
+        var contentIV = fs.readFileSync('./.iv', 'utf8', function(err) {
+            if (err)
+                console.log (err);
+            else
+                prevIV = contentIV;
+                console.log('IV resaved');
+        });
     }
     catch(ex)
     {
