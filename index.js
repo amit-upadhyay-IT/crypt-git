@@ -125,7 +125,7 @@ function decryptTheFile(iv, filePath, writablePath)
                 console.log(err);
             else
             {
-                //console.log('File decrypted successfully !!');
+                console.log('File decrypted successfully !!');
             }
         });
     });
