@@ -195,6 +195,12 @@ function getFiles(iv)
     /*TODO: Now it's searching for the file name written in file line, later I should run a loop and do the same for rest of the lines*/
     find.file(fileNames[0], __dirname, function(file) {
 
+        if (file.length == 0)
+        {
+            console.log('There are no files to be encrypted');
+            process.exit(0);
+        }
+
         for (var i = 0; i < file.length; ++i)
         {
             if (file[i].indexOf('node_modules') !== -1)// the directory where search is going under node_modules
@@ -206,7 +212,6 @@ function getFiles(iv)
                 // call the file encryption function here, because I don't want to encrypt the files under node_modules
                 doFileEncryption(file[i], iv, i, file.length);// arg1: filepath, arg2:iv, arg3: i (current file position in file array), arg4: total number of files, The arg3 and arg4 are passed because we need to do push when all the required files are encrypted, so in doFileEncryption method we will check if we have successfully encrypted the last file then we do the push to repo.
             }
-            console.log(file[i]);
         }
     });
 }
@@ -251,7 +256,6 @@ function doFileEncryption(filePath, iv, currPos, totalCount)
 function doPushOperation()
 {
     var msg = 'git add -A && git commit -m\'commit using app\' && git push -u origin master';
-
     //var msg = 'git add -A && git commit -m \''+commitMessage+'\' && git push -u origin master';
     console.log(msg);
     if (theReqCmd !== '')
@@ -264,7 +268,7 @@ function doPushOperation()
                 if (err)
                     console.log(err);
                 else
-                    console.log('data: ', data);
+                    console.log(data);
             }
         );
     }
