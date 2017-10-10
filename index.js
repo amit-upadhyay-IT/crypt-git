@@ -91,7 +91,7 @@ function doPull()
                 }
                 else
                 {
-                    console.log('data: ', data);
+                    console.log(data);
                     readIV();
                 }
             }
@@ -151,7 +151,7 @@ function decryptTheFile(iv, filePath, writablePath)
                 console.log(err);
             else
             {
-                console.log('File decrypted successfully !!');
+                console.log(filePath + ' File decrypted successfully !!');
             }
         });
     });
@@ -229,13 +229,10 @@ function getFiles(iv)
         process.exit(0);
     }
     var fileNames = fileContent.split('\n');
-    console.log(fileNames[0]);
 
-    /*TODO: the files under node_modules should not get encrypted because they are however not pushed to the git repo*/
     /*TODO: Now it's searching for the file name written in file line, later I should run a loop and do the same for rest of the lines*/
     find.file(fileNames[0], './', function(file) {
 
-        console.log(__dirname);
         if (file.length == 0)
         {
             console.log('\nThere are no files to be encrypted\n');
@@ -244,6 +241,8 @@ function getFiles(iv)
 
         for (var i = 0; i < file.length; ++i)
         {
+
+            /* the files under node_modules should not get encrypted because they are however not pushed to the git repo*/
             if (file[i].indexOf('node_modules') !== -1)// the directory where search is going under node_modules
             {
                 // do something
@@ -300,6 +299,7 @@ function doPushOperation()
         commitMessage = 'Commit via crypt-git';
     var msg = 'git add -A && git commit -m "'+commitMessage+'" && git push -u origin master';
     //var msg = 'git add -A && git commit -m \''+commitMessage+'\' && git push -u origin master';
+
     if (theReqCmd !== '')// just a normal check if user wants to push or not
     {
         // an async operation because it is required.
