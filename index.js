@@ -187,7 +187,7 @@ function generateIV()
     var val = doesIVFileExists();
     if (val) // if file exists no need to generate new
     {
-        getPassword(val);
+        getPassword(new Buffer(val, 'hex'));
     }
     else
     {
