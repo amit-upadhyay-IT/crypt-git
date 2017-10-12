@@ -158,6 +158,31 @@ function decryptTheFile(iv, filePath, writablePath)
 }
 
 
+function doesIVFileExists()
+{
+    var ivContent = '';
+
+    try
+    {
+        ivContent = fs.readFileSync('./.iv', 'utf8');
+        if (ivContent === '') // the file exists but it's empty or contains invalid info.
+        {
+            return false;
+        }
+        else if (new Buffer(ivContent, 'hex').byteLength !== 16)// if the file content if inappropriate then return false
+        {
+            return false;
+        }
+        return true;// if things are right then return true;
+    }
+    catch (ex)
+    {
+        return false;// i.e. the file doesn't exists thus we return false
+    }
+    return true; // things are right so returning true;
+}
+
+
 function generateIV()
 {
     var iv = crypto.randomBytes(16);
