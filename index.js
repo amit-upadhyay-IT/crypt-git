@@ -173,33 +173,42 @@ function doesIVFileExists()
         {
             return false;
         }
-        return true;// if things are right then return true;
+        return ivContent;// if things are right then returning the content of file;
     }
     catch (ex)
     {
         return false;// i.e. the file doesn't exists thus we return false
     }
-    return true; // things are right so returning true;
 }
 
 
 function generateIV()
 {
-    var iv = crypto.randomBytes(16);
-    var hexiv = iv.toString('hex');
+    var val = doesIVFileExists();
+    if (val) // if file exists no need to generate new
+    {
+        getPassword(val);
+    }
+    else
+    {
+        var iv = crypto.randomBytes(16);
+        var hexiv = iv.toString('hex');
 
-    var ivw = fs.createWriteStream('./.iv');
-    var Readable = stream.Readable;
-    var s = new Readable();
-    s._read = function noop() {};
-    s.push(hexiv);
-    s.push(null);
-    s.pipe(ivw);
+        var ivw = fs.createWriteStream('./.iv');
+        var Readable = stream.Readable;
+        var s = new Readable();
+        s._read = function noop() {};
+        s.push(hexiv);
+        s.push(null);
+        s.pipe(ivw);
 
-    s.on('end', function() {
-        // call the next required step
-        getPassword(iv);
-    });
+        s.on('end', function() {
+            // call the next required step
+            getPassword(iv);
+        });
+
+    }
+
 }
 
 
