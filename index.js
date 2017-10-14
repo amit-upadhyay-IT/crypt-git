@@ -74,11 +74,6 @@ function getPrevIV()
 }
 
 
-function onFailPushWritePrevIV()
-{
-    fs.writeFileSync('./.iv', prevIV);
-}
-
 function doPull()
 {
         cmd.get(
@@ -345,7 +340,6 @@ function doPushOperation()
                 {
                     // if the push fails then I need to restore the previous iv otherwise it will give error in decrypting and decompressing
                     console.log(err);
-                    onFailPushWritePrevIV();
                 }
                 else
                     console.log(data);
