@@ -326,6 +326,7 @@ function doFileEncryption(filePath, iv, currPos, totalCount)
 }
 
 
+/*TODO: after successful push we need to ask the user whether to perform decryption operation or not*/
 // the push operation can be async because we will push to the repo in the end, after we are done with encryption, and deletion of non-encrypted file.
 function doPushOperation()
 {
