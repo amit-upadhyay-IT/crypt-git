@@ -74,6 +74,8 @@ function getPrevIV()
 }
 
 
+// performing pull is not required because decryption is done using the .iv file, which is available locally (updated), in case the file is deleted somehow you can ask the user to clone the repo and try decrypting once again
+/*TODO: since I am not actually doing the pull operation thus, I need to change the pull keyword and rather say something like decrypt*/
 function doPull()
 {
         cmd.get(
