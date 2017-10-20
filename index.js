@@ -40,11 +40,11 @@ module.exports = function (inputArray) {
     else
     {
         // checking if commit cmd
-        var isCommit = match_commands.matchCommitCmd(inputArray);
-        if (isCommit !== null)
+        var isDecrypt = match_commands.matchDecrypt(inputArray);
+        if (isDecrypt !== null)
         {
             flag = 2;
-            doPull();
+            doDecrypt();
         }
         else
         {
@@ -76,7 +76,7 @@ function getPrevIV()
 
 // performing pull is not required because decryption is done using the .iv file, which is available locally (updated), in case the file is deleted somehow you can ask the user to clone the repo and try decrypting once again
 /*TODO: since I am not actually doing the pull operation thus, I need to change the pull keyword and rather say something like decrypt*/
-function doPull()
+function doDecrypt()
 {
     console.log('Please wait, decrypting files...');
     readIV();
