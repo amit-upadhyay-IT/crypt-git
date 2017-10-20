@@ -31,9 +31,9 @@ var matchDecryptCmd = function (inputArray) {
     }
     inputCmd = inputCmd.slice(0, -1);//slicing the last space.
 
-    // I am using as a regex
-    var toMatchCmd1 = 'decrypt';
-    return (inputCmd.match(toMatchCmd1));
+    // I am using as a regex, because someday in future I may need to scale it up (sounds foolish, right? It's ok)
+    var toMatchCmd = 'decrypt';
+    return (inputCmd.match(toMatchCmd));
 }
 
 module.exports.matchPushCmd = matchPushCmd;
