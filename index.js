@@ -78,7 +78,6 @@ function getPrevIV()
 /*TODO: since I am not actually doing the pull operation thus, I need to change the pull keyword and rather say something like decrypt*/
 function doDecrypt()
 {
-    console.log('Please wait, decrypting files...');
     readIV();
 /*
         cmd.get(
@@ -237,9 +236,14 @@ function getPassword(iv)
             process.exit(0);
         }
         if (flag === 1)
+        {
             getFiles(iv);
+        }
         else if (flag == 2)
+        {
+            console.log('Please wait, decrypting files...');
             findEncryptedFiles(iv);
+        }
     });
 }
 
