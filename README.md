@@ -48,7 +48,7 @@ cg decrypt
 ```
 NOTE: cg is abbreviation for crypt-git
 
-When you perform `cg decrypt`, the encrypted file are being decrypted on your local machine.
+When you perform `cg decrypt`, the encrypted file gets decrypted on your local machine.
 
 Cool right?
 
@@ -59,7 +59,7 @@ $ cg push <commit message> // to push with the encrypted content.
 
 cg decrypt // to decrypt the encrypted files
 ```
-To know more see [this](https://github.com/amit-upadhyay-IT/crypt-git#documentation).
+To know more read [this](https://github.com/amit-upadhyay-IT/crypt-git#documentation).
 
 
 ## NOTE:
@@ -76,6 +76,13 @@ Nothing important here that you don't already know.
 
 **Olympian release (v1.5.0)**
 - This release takes care of commit history, because now every push doesn't create a new encryption pattern into the file, So all the files doesn't gets changes. This doesn't make the commit history improper. To know more about this release see [this](https://github.com/amit-upadhyay-IT/crypt-git/releases/tag/v1.5.0)
+
+**Sovereign release (v1.6.0)**
+- The command `cg pull` is replaced with `cg decrypt`.
+- In this release `git pull` is not being performed because it is not required. The decryption process is done using the .iv file, which is available locally (so why fetch again?), in case the file is deleted somehow, the user is asked to clone the repo and try decrypting again.
+
+**Chief release**
+- Yet to come.
 
 
 ## License
