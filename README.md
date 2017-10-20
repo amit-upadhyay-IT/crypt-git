@@ -40,34 +40,31 @@ The above command is equivalent to doing these operations:
 
 Now all your important files mentioned in `.cryptfiles` file are pushed on your repository in encrypted (and compressed) form.
 
-#### To pull:
+#### To decrypt:
 
-When you want to work remotely with your repository then all you need is:
+When you want to work remotely with your repository (without any encrypted file) then all you need is:
 ```
-cg pull
+cg decrypt
 ```
 NOTE: cg is abbreviation for crypt-git
 
-The above command is equivalent to:
-```
-git pull
-```
+When you perform `cg decrypt`, the encrypted file are being decrypted on your local machine.
 
 Cool right?
 
 ## Usage
 
 ```js
-$ cg push <commit message> // to push
+$ cg push <commit message> // to push with the encrypted content.
 
-cg pull // to pull
+cg decrypt // to decrypt the encrypted files
 ```
 To know more see [this](https://github.com/amit-upadhyay-IT/crypt-git#documentation).
 
 
 ## NOTE:
 
-- It is important to do `cg pull` after every `cg push` if you want to continue working remotely, because after long time span you may forget to perform `cg pull` (i.e. decrypting of your important files) and you may perform `cg push` again(which will lead in change of iv) which will cause problem in decryption of files because the iv will get replaced by a new random 16 bytes. Automating it is not a big deal and this will be taken care in next release.
+Nothing important here that you don't already know.
 
 ## About branches
 
@@ -77,7 +74,8 @@ To know more see [this](https://github.com/amit-upadhyay-IT/crypt-git#documentat
 
 ## Release improvements
 
-- This release takes care of commit history, because now every push doesn't create a new encryption pattern into the file, So all the files doesn't gets changes. This doesn't make the commit history improper.
+**Olympian release (v1.5.0)**
+- This release takes care of commit history, because now every push doesn't create a new encryption pattern into the file, So all the files doesn't gets changes. This doesn't make the commit history improper. To know more about this release see [this](https://github.com/amit-upadhyay-IT/crypt-git/releases/tag/v1.5.0)
 
 
 ## License
