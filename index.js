@@ -74,11 +74,11 @@ function getPrevIV()
 }
 
 
-// performing pull is not required because decryption is done using the .iv file, which is available locally (updated), in case the file is deleted somehow you can ask the user to clone the repo and try decrypting once again
-/*TODO: since I am not actually doing the pull operation thus, I need to change the pull keyword and rather say something like decrypt*/
 function doDecrypt()
 {
     readIV();
+
+    // obsolete code which was being used in v1.5.0 to pull
 /*
         cmd.get(
         'git pull',
@@ -99,7 +99,7 @@ function doDecrypt()
 }
 
 
-// I need to get pull from repo before I start the process of decryption
+// simply reading the iv
 function readIV()
 {
     try
@@ -110,7 +110,7 @@ function readIV()
     }
     catch(ex)
     {
-        console.log('You are trying to decrypt some different project\nCheck:\n1)Clone same project which you have encrypted via crypt-git and pushed to git\n2)This repo has never been encrypted\n');
+        console.log('You are trying to decrypt some different project\nCheck:\n1)Clone same project which you have encrypted via crypt-git and pushed to git\n2)This repo has never been encrypted\n\n');
         process.exit(0);
     }
 }
