@@ -21,7 +21,7 @@ var matchPushCmd = function (inputArray) {
 
 // the input to be passed here is array of strings
 // returns null of not matched otherwise returns []
-var matchCommitCmd = function (inputArray) {
+var matchDecryptCmd = function (inputArray) {
 
     var inputCmd = '';
     // cancatenate the elements of inputArray with space included after each word
@@ -31,15 +31,13 @@ var matchCommitCmd = function (inputArray) {
     }
     inputCmd = inputCmd.slice(0, -1);//slicing the last space.
 
-    // working as a regex
-    var toMatchCmd1 = 'git clone *';
-    var toMatchCmd2 = 'clone';
-    var toMatchCmd3 = 'pull';
-    return (inputCmd.match(toMatchCmd1) || inputCmd.match(toMatchCmd2) || inputCmd.match(toMatchCmd3));
+    // I am using as a regex
+    var toMatchCmd1 = 'decrypt';
+    return (inputCmd.match(toMatchCmd1));
 }
 
 module.exports.matchPushCmd = matchPushCmd;
-module.exports.matchCommitCmd = matchCommitCmd;
+module.exports.matchDecrypt = matchDecryptCmd;
 
 /*
 var returnObj = matchCommitCmd(process.argv.slice(2));
