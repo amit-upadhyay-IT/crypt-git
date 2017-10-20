@@ -78,6 +78,9 @@ function getPrevIV()
 /*TODO: since I am not actually doing the pull operation thus, I need to change the pull keyword and rather say something like decrypt*/
 function doPull()
 {
+    console.log('Please wait, decrypting files...');
+    readIV();
+/*
         cmd.get(
         'git pull',
             function(err, data, stderr) {
@@ -93,7 +96,7 @@ function doPull()
                 }
             }
         );
-
+*/
 }
 
 
