@@ -88,6 +88,9 @@ Nothing important here that you don't already know.
 
 **Chief release**
 - Yet to come.
+- Major changes (**TODO**):
+1) Ability to perform encryption of files with match of the regular expressions (this will help encryption of multiple files with same extension and irrespective of their names).
+2) The `.cryptfiles` can take several lines of input and the each file or file path will get encrypted.
 
 
 ## License
