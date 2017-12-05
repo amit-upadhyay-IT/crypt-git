@@ -22,7 +22,7 @@ You just need to maintain a file `.cryptfiles` where you need to specify the `fi
 ##### edit .cryptfiles file
 `vim .cryptfiles`
 
-See an example [here](https://github.com/amit-upadhyay-IT/crypt-git/blob/master/.cryptfiles)
+See an example [here](https://github.com/amit-upadhyay-IT/crypt-git/blob/master/.cryptfiles), this encrypts all the files named `amit.txt` in the repo.
 
 
 #### To push:
