@@ -2,7 +2,7 @@
 > Got some important files which you don't want to share publicly but still want to use github as VCS for your softwares. Crypt-git can help you.
 
 
-crypt-git is a command line utility written in node.js which enables to encrypt important files when you push them on GitHub repo and decrypt then when you want to work remotely. Doing this is very very simple with 'crypt-git'.
+crypt-git is a command line utility written in node.js which enables to encrypt important files when you push them on GitHub repo and decrypt then when you want to work locally on your system. Doing this is very very simple with 'crypt-git'.
 
 ## Installation
 
@@ -42,7 +42,7 @@ Now all your important files mentioned in `.cryptfiles` file are pushed on your 
 
 #### To decrypt:
 
-When you want to work remotely with your repository (without any encrypted file) then all you need is:
+When you want to work locally with your repository (without any encrypted file) then all you need is:
 ```
 cg decrypt
 ```
